@@ -7,10 +7,10 @@ from setuptools import setup, Extension
 
 # Set MILLER_RABIN_SUPPRESS_LINK_FLAGS and include absolute path of
 # libgmp.a in the LDFLAGS environment variable for static linking.
-SUPPRESS_LINK_FLAGS = os.getenv("MILLER_RABIN_SUPPRESS_LINK_FLAGS") is not None
+SUPPRESS_LINK_FLAGS = os.getenv("MILLER_RABIN_SUPPRESS_LINK_FLAGS")
 # Set MILLER_RABIN_SKIP_PRELIMINARY_TESTS to skip preliminary tests for
 # extended correctness testing.
-SKIP_PRELIMINARY_TESTS = os.getenv("MILLER_RABIN_SKIP_PRELIMINARY_TESTS") is not None
+SKIP_PRELIMINARY_TESTS = os.getenv("MILLER_RABIN_SKIP_PRELIMINARY_TESTS")
 
 here = pathlib.Path(__file__).parent
 with here.joinpath("README.md").open() as fp:
