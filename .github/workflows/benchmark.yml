@@ -1,0 +1,36 @@
+name: benchmark
+on: [push, pull_request]
+jobs:
+  benchmark:
+    name: Benchmark on ${{ matrix.os }} with Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.6", "3.7", "3.8"]
+      fail-fast:
+        false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install system dependencies on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt install -y libgmp-dev libmpfr-dev libmpc-dev
+      - name: Install system dependencies on macOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          brew install gmp mpfr libmpc
+      - name: Build and install package with test dependencies
+        run: |
+          pip install --user '.[bench]'
+      - name: Benchmark (fixed seed)
+        run: |
+          bench/benchmark.py
+      - name: Benchmark (random seed)
+        run: |
+          bench/benchmark.py --seed

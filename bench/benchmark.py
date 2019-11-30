@@ -72,7 +72,7 @@ def run_benchmarks(sample_size, seed, rounds):
             tablerow.append(f"{(speed):.3f}")
         table.append(tablerow)
     for row in table:
-        print("\t".join(row))
+        print("\t".join(row).expandtabs())
     print("(unit: million tests per second)")
     cpu_brand = cpuinfo.get_cpu_info().get("brand", "unknown")
     print(f"(CPU: {cpu_brand})")

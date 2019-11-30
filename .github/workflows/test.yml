@@ -1,0 +1,36 @@
+name: test
+on: [push, pull_request]
+jobs:
+  build-and-test:
+    name: Build and test on ${{ matrix.os }} with Python ${{ matrix.python-version }} (MILLER_RABIN_SKIP_PRELIMINARY_TESTS=${{ matrix.MILLER_RABIN_SKIP_PRELIMINARY_TESTS }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.6", "3.7", "3.8"]
+        MILLER_RABIN_SKIP_PRELIMINARY_TESTS: ["", "1"]
+      fail-fast:
+        false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install system dependencies on Ubuntu
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          sudo apt install -y libgmp-dev
+      - name: Install system dependencies on macOS
+        if: startsWith(matrix.os, 'macos')
+        run: |
+          brew install gmp
+      - name: Build and install package with test dependencies
+        env:
+          MILLER_RABIN_SKIP_PRELIMINARY_TESTS: ${{ matrix.MILLER_RABIN_SKIP_PRELIMINARY_TESTS }}
+        run: |
+          pip install --user '.[tests]'
+      - name: Test
+        run: |
+          python -m pytest
