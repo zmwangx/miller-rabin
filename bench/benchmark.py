@@ -38,6 +38,7 @@ def generate_benchmark_sequence(seed, range_start_stop, length):
 
 
 def run_benchmarks(sample_size, seed, rounds):
+    sys.stderr.write(f"random seed: {seed!r}\n")
     table = []
     tablerow = ["#bits"]
     tablerow.extend(name for name, _ in BENCHMARK_TARGETS)
