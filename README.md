@@ -4,7 +4,7 @@
 ![Python 3.6+](https://img.shields.io/badge/python-3.6%2B-blue?cacheSeconds=86400)
 ![CPython only](https://img.shields.io/badge/implementation-cpython-blue?cacheSeconds=86400)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green?cacheSeconds=86400)
-![Test](https://github.com/zmwangx/miller-rabin/workflows/test/badge.svg)
+![Test](https://github.com/zmwangx/miller-rabin/workflows/test/badge.svg?branch=master)
 [![Docs](https://img.shields.io/badge/docs-passing-brightgreen?cacheSeconds=86400)](#api)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg?cacheSeconds=86400)](https://github.com/psf/black)
 
