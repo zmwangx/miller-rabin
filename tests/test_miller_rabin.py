@@ -1,7 +1,6 @@
 import pathlib
 import random
 
-import gmpy2
 import pytest
 
 import miller_rabin
@@ -54,9 +53,11 @@ def test_miller_rabin_deterministic32_errors():
 def test_miller_rabin_deterministic64(authoritative_lists):
     primes, nonprimes = authoritative_lists
     for n in primes:
-        assert miller_rabin.miller_rabin_deterministic64(n)
+        if n >> 64 == 0:
+            assert miller_rabin.miller_rabin_deterministic64(n)
     for n in nonprimes:
-        assert not miller_rabin.miller_rabin_deterministic64(n)
+        if n >> 64 == 0:
+            assert not miller_rabin.miller_rabin_deterministic64(n)
 
 
 def test_miller_rabin_deterministic64_errors():
@@ -79,28 +80,24 @@ def test_miller_rabin_deterministic64_errors():
 def test_miller_rabin_64bit(authoritative_lists):
     primes, nonprimes = authoritative_lists
     for n in primes:
-        assert miller_rabin.miller_rabin(n)
+        if n >> 64 == 0:
+            assert miller_rabin.miller_rabin(n)
     for n in nonprimes:
-        assert not miller_rabin.miller_rabin(n)
+        if n >> 64 == 0:
+            assert not miller_rabin.miller_rabin(n)
 
 
-def test_miller_rabin_super_64bit():
-    # For numbers > 64-bit, instead of using an authoritative table, we
-    # just compare probablistic results of this library and gmpy2.
-    for _ in range(1000000):
-        n = random.randrange((1 << 95) + 1, 1 << 96, 2)
-        r1 = miller_rabin.miller_rabin(n)
-        r2 = gmpy2.is_prime(n)
-        if r1 != r2:
-            if r1:
-                # gymp managed to detect composite, not us.
-                r1 = miller_rabin.miller_rabin(n, 96)
-            else:
-                # We managed to detect composite, not gymp.
-                r2 = gmpy2.is_prime(n, 96)
-            # The chance of false positive after 96 rounds should be
-            # extremely low, so we report it.
-            assert r1 == r2, f"results differ on {n} (us: {r1}, gmpy2: {r2})"
+def test_miller_rabin_super_64bit(authoritative_lists):
+    primes, nonprimes = authoritative_lists
+    for n in primes:
+        if n >> 64 != 0:
+            assert miller_rabin.miller_rabin(n)
+    for n in nonprimes:
+        if n >> 64 != 0:
+            if miller_rabin.miller_rabin(n):
+                # The chance is way too small to get a false positive
+                # after 96 rounds.
+                assert not miller_rabin.miller_rabin(n, 96)
 
 
 def test_miller_rabin_errors():

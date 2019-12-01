@@ -23,7 +23,7 @@ module = Extension(
     define_macros=[("SKIP_PRELIMINARY_TESTS", None)] if SKIP_PRELIMINARY_TESTS else [],
 )
 
-tests_require = ["pytest", "gmpy2"]
+tests_require = ["pytest"]
 bench_require = ["gmpy2", "py-cpuinfo"]
 
 setup(
