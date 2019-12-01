@@ -21,6 +21,7 @@ module = Extension(
     sources=["src/miller_rabin.c"],
     libraries=[] if SUPPRESS_LINK_FLAGS else ["gmp"],
     define_macros=[("SKIP_PRELIMINARY_TESTS", None)] if SKIP_PRELIMINARY_TESTS else [],
+    extra_compile_args=["-std=c99"],
 )
 
 tests_require = ["pytest"]
