@@ -12,11 +12,14 @@ I implement this fast (see [*Performance*](#performance)), deterministic (up to 
 
 Only CPython 3.6 or later is supported.
 
+Project canonical URL: <https://github.com/zmwangx/miller-rabin>
+
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
 
 - [Algorithm](#algorithm)
+- [Installation](#installation)
 - [API](#api)
 - [Performance](#performance)
 - [Development](#development)
@@ -36,6 +39,14 @@ Credit:
 - [2] https://miller-rabin.appspot.com/
 - [3] https://www.boost.org/doc/libs/release/libs/multiprecision/doc/html/boost_multiprecision/tut/primetest.html (Boost Software License, see [`COPYING.boost`](COPYING.boost))
 - [4] https://gmplib.org/ (LGPLv3, see [`COPYING.gmp`](COPYING.gmp))
+
+## Installation
+
+    pip install miller-rabin
+
+Wheels with dependencies included are available for macOS and Linux (`manylinux1`, `manylinux2010` and `manylinux2014`) for Python 3.6, 3.7 and 3.8. A reasonably recent pip should be able to pick a wheel automatically (`manylinux1` support was added in v8.1.2), but it is advised to update pip to latest.
+
+To install from a source distribution, CPython development headers and `libgmp` along with development headers are required.
 
 ## API
 
