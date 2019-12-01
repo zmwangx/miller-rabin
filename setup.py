@@ -29,7 +29,7 @@ bench_require = ["gmpy2", "py-cpuinfo"]
 
 setup(
     name="miller_rabin",
-    version="1.0",
+    version="1.0.0",
     url="https://github.com/zmwangx/miller-rabin",
     description="Fast, deterministic* Miller-Rabin primality test.",
     long_description=long_description,
